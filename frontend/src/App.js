@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -7,22 +7,36 @@ import CustomerProfile from './pages/CustomerProfile';
 import Services from './pages/Services';
 import Invoices from './pages/Invoices';
 import Payments from './pages/Payments';
+import InvoiceList from './pages/InvoiceList';
+import InvoiceDetail from './pages/InvoiceDetail';
+import { AuthProvider, AuthContext } from './AuthContext';
+
+function Nav(){
+  const { user, customer, logout } = useContext(AuthContext);
+  return (
+    <nav>
+      <Link to="/">Dashboard</Link> | <Link to="/profile">Profile</Link> | <Link to="/services">Services</Link> | <Link to="/invoices">Invoices</Link> | <Link to="/payments">Payments</Link>
+      { user ? (<span style={{marginLeft:12}}>Hello {user.username} <button onClick={logout}>Logout</button></span>) : (<span style={{marginLeft:12}}><Link to="/login">Login</Link> | <Link to="/register">Register</Link></span>) }
+    </nav>
+  );
+}
 
 export default function App(){
   return (
-    <BrowserRouter>
-      <nav>
-        <Link to="/">Dashboard</Link> | <Link to="/profile">Profile</Link> | <Link to="/services">Services</Link> | <Link to="/invoices">Invoices</Link> | <Link to="/payments">Payments</Link> | <Link to="/login">Login</Link> | <Link to="/register">Register</Link>
-      </nav>
-      <Routes>
-        <Route path="/" element={<Dashboard/>} />
-        <Route path="/login" element={<Login/>} />
-        <Route path="/register" element={<Register/>} />
-        <Route path="/profile" element={<CustomerProfile/>} />
-        <Route path="/services" element={<Services/>} />
-        <Route path="/invoices" element={<Invoices/>} />
-        <Route path="/payments" element={<Payments/>} />
-      </Routes>
-    </BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
+        <Nav />
+        <Routes>
+          <Route path="/" element={<Dashboard/>} />
+          <Route path="/login" element={<Login/>} />
+          <Route path="/register" element={<Register/>} />
+          <Route path="/profile" element={<CustomerProfile/>} />
+          <Route path="/services" element={<Services/>} />
+          <Route path="/invoices" element={<InvoiceList/>} />
+          <Route path="/invoices/:id" element={<InvoiceDetail/>} />
+          <Route path="/payments" element={<Payments/>} />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }

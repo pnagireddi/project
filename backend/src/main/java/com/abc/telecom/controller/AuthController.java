@@ -79,4 +79,18 @@ public class AuthController {
         String token = jwtUtil.generateToken(req.getUsername());
         return ResponseEntity.ok(new AuthResponse(token));
     }
+
+    @GetMapping("/me")
+    @Operation(summary = "Get current authenticated user and customer profile")
+    public ResponseEntity<?> me() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null || !auth.isAuthenticated()) return ResponseEntity.status(401).build();
+        String username = auth.getName();
+        return userService.findByUsername(username).map(u -> {
+            // try to find customer profile
+            java.util.Optional<Customer> c = customerService.findByUserId(u.getUserId());
+            if (c.isPresent()) return ResponseEntity.ok(java.util.Map.of("user", u, "customer", c.get()));
+            return ResponseEntity.ok(java.util.Map.of("user", u));
+        }).orElse(ResponseEntity.status(404).build());
+    }
 }

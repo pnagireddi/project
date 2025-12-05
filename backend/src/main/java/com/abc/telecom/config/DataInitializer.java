@@ -28,7 +28,6 @@ public class DataInitializer implements CommandLineRunner {
     private final TelecomServiceRepository telecomServiceRepository;
     private final UsageRecordRepository usageRecordRepository;
     private final InvoiceRepository invoiceRepository;
-    private final PaymentRepository paymentRepository;
     private final PasswordEncoder passwordEncoder;
 
     public DataInitializer(UserRepository userRepository,
@@ -36,14 +35,12 @@ public class DataInitializer implements CommandLineRunner {
                            TelecomServiceRepository telecomServiceRepository,
                            UsageRecordRepository usageRecordRepository,
                            InvoiceRepository invoiceRepository,
-                           PaymentRepository paymentRepository,
                            PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.customerRepository = customerRepository;
         this.telecomServiceRepository = telecomServiceRepository;
         this.usageRecordRepository = usageRecordRepository;
         this.invoiceRepository = invoiceRepository;
-        this.paymentRepository = paymentRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -78,26 +75,26 @@ public class DataInitializer implements CommandLineRunner {
             // Add a sample service
             TelecomService svc = new TelecomService();
             svc.setCustomerId(c.getCustomerId());
-            svc.setServiceName("Unlimited Mobile Plan");
-            svc.setMonthlyFee(BigDecimal.valueOf(49.99));
+            svc.setServiceType("Unlimited Mobile Plan");
+            svc.setStartDate(java.time.LocalDateTime.now().minusMonths(1));
+            svc.setStatus("ACTIVE");
             svc = telecomServiceRepository.save(svc);
 
             // Add a sample usage
             UsageRecord u = new UsageRecord();
             u.setServiceId(svc.getServiceId());
-            u.setUsageDate(new Date());
-            u.setUnits(1024L);
-            u.setAmount(BigDecimal.valueOf(5.50));
+            u.setUsageDate(java.time.LocalDateTime.now());
+            u.setUnit("MB");
+            u.setUsageAmount(5.5);
             usageRecordRepository.save(u);
 
             // Create an invoice for last month
             Invoice inv = new Invoice();
             inv.setCustomerId(c.getCustomerId());
-            inv.setBillingPeriodStart(Date.from(LocalDate.now().minusMonths(1).atStartOfDay(ZoneId.systemDefault()).toInstant()));
-            inv.setBillingPeriodEnd(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
-            inv.setTotalAmount(BigDecimal.valueOf(55.49));
-            inv.setCreatedAt(new Date());
-            inv.setDueDate(Date.from(LocalDate.now().plusWeeks(2).atStartOfDay(ZoneId.systemDefault()).toInstant()));
+            inv.setBillingPeriodStart(java.time.LocalDateTime.now().minusMonths(1));
+            inv.setBillingPeriodEnd(java.time.LocalDateTime.now());
+            inv.setTotalAmount(55.49);
+            inv.setDueDate(java.time.LocalDateTime.now().plusWeeks(2));
             inv.setStatus("UNPAID");
             inv = invoiceRepository.save(inv);
         }

@@ -36,6 +36,22 @@ export async function getCustomerServices(customerId) {
   return api.get(`/customers/${customerId}/services`).then(r => r.data);
 }
 
+export async function getCustomerInvoices(customerId) {
+  return api.get(`/customers/${customerId}/invoices`).then(r => r.data);
+}
+
+export async function getInvoice(invoiceId) {
+  return api.get(`/invoices/${invoiceId}`).then(r => r.data);
+}
+
+export async function getInvoicePayments(invoiceId) {
+  return api.get(`/invoices/${invoiceId}/payments`).then(r => r.data);
+}
+
+export async function getMe() {
+  return api.get('/auth/me').then(r => r.data);
+}
+
 export async function addUsage(serviceId, payload) {
   return api.post(`/services/${serviceId}/usage`, payload).then(r => r.data);
 }

@@ -19,4 +19,10 @@ public class CustomerService {
     public Customer save(Customer c) { return customerRepository.save(c); }
 
     public void delete(Long id) { customerRepository.deleteById(id); }
+
+    public java.util.Optional<Customer> findByUserId(Long userId) {
+        java.util.List<Customer> list = customerRepository.findByUserId(userId);
+        if (list == null || list.isEmpty()) return java.util.Optional.empty();
+        return java.util.Optional.of(list.get(0));
+    }
 }
