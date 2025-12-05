@@ -1,5 +1,7 @@
+com\abc\telecom\config\OpenApiConfig.class
 com\abc\telecom\exception\ApiError.class
 com\abc\telecom\service\CustomerService.class
+com\abc\telecom\exception\UserAlreadyExistsException.class
 com\abc\telecom\repository\TelecomServiceRepository.class
 com\abc\telecom\repository\InvoiceRepository.class
 com\abc\telecom\repository\PaymentRepository.class

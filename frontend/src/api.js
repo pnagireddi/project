@@ -24,6 +24,18 @@ export async function createService(customerId, payload) {
   return api.post(`/customers/${customerId}/services`, payload).then(r => r.data);
 }
 
+export async function createCustomer(payload) {
+  return api.post(`/customers`, payload).then(r => r.data);
+}
+
+export async function getCustomer(customerId) {
+  return api.get(`/customers/${customerId}`).then(r => r.data);
+}
+
+export async function getCustomerServices(customerId) {
+  return api.get(`/customers/${customerId}/services`).then(r => r.data);
+}
+
 export async function addUsage(serviceId, payload) {
   return api.post(`/services/${serviceId}/usage`, payload).then(r => r.data);
 }

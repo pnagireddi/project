@@ -1,0 +1,9 @@
+﻿{
+    "userId":  4,
+    "username":  "swagger_test_user_4751",
+    "passwordHash":  "$2a$10$GscRGXnLJciE7h.RbStExOiQrvuE2/UDOAKm4tJDL7y8oswPdr7Si",
+    "email":  "swagger_test_user_4751@example.com",
+    "role":  "CUSTOMER",
+    "createdAt":  "2025-12-05T23:25:05.630806",
+    "updatedAt":  "2025-12-05T23:25:05.630806"
+}

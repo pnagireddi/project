@@ -8,6 +8,7 @@ C:\WorkSpace\GEN-AI(Level-3)\backend\src\main\java\com\abc\telecom\model\UsageRe
 C:\WorkSpace\GEN-AI(Level-3)\backend\src\main\java\com\abc\telecom\controller\AuthController.java
 C:\WorkSpace\GEN-AI(Level-3)\backend\src\main\java\com\abc\telecom\service\TelecomServiceService.java
 C:\WorkSpace\GEN-AI(Level-3)\backend\src\main\java\com\abc\telecom\controller\UserAdminController.java
+C:\WorkSpace\GEN-AI(Level-3)\backend\src\main\java\com\abc\telecom\exception\UserAlreadyExistsException.java
 C:\WorkSpace\GEN-AI(Level-3)\backend\src\main\java\com\abc\telecom\service\InvoiceService.java
 C:\WorkSpace\GEN-AI(Level-3)\backend\src\main\java\com\abc\telecom\model\Payment.java
 C:\WorkSpace\GEN-AI(Level-3)\backend\src\main\java\com\abc\telecom\model\Customer.java
@@ -24,6 +25,7 @@ C:\WorkSpace\GEN-AI(Level-3)\backend\src\main\java\com\abc\telecom\dto\CreateSer
 C:\WorkSpace\GEN-AI(Level-3)\backend\src\main\java\com\abc\telecom\repository\UsageRecordRepository.java
 C:\WorkSpace\GEN-AI(Level-3)\backend\src\main\java\com\abc\telecom\dto\CustomerDto.java
 C:\WorkSpace\GEN-AI(Level-3)\backend\src\main\java\com\abc\telecom\model\Invoice.java
+C:\WorkSpace\GEN-AI(Level-3)\backend\src\main\java\com\abc\telecom\config\OpenApiConfig.java
 C:\WorkSpace\GEN-AI(Level-3)\backend\src\main\java\com\abc\telecom\dto\AuthResponse.java
 C:\WorkSpace\GEN-AI(Level-3)\backend\src\main\java\com\abc\telecom\security\SecurityConfig.java
 C:\WorkSpace\GEN-AI(Level-3)\backend\src\main\java\com\abc\telecom\controller\UsageController.java
