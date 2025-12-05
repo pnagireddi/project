@@ -10,6 +10,8 @@ import Payments from './pages/Payments';
 import InvoiceList from './pages/InvoiceList';
 import InvoiceDetail from './pages/InvoiceDetail';
 import { AuthProvider, AuthContext } from './AuthContext';
+import ProtectedRoute from './components/ProtectedRoute';
+import Toast from './components/Toast';
 
 function Nav(){
   const { user, customer, logout } = useContext(AuthContext);
@@ -30,12 +32,13 @@ export default function App(){
           <Route path="/" element={<Dashboard/>} />
           <Route path="/login" element={<Login/>} />
           <Route path="/register" element={<Register/>} />
-          <Route path="/profile" element={<CustomerProfile/>} />
-          <Route path="/services" element={<Services/>} />
-          <Route path="/invoices" element={<InvoiceList/>} />
-          <Route path="/invoices/:id" element={<InvoiceDetail/>} />
-          <Route path="/payments" element={<Payments/>} />
+          <Route path="/profile" element={<ProtectedRoute><CustomerProfile/></ProtectedRoute>} />
+          <Route path="/services" element={<ProtectedRoute><Services/></ProtectedRoute>} />
+          <Route path="/invoices" element={<ProtectedRoute><InvoiceList/></ProtectedRoute>} />
+          <Route path="/invoices/:id" element={<ProtectedRoute><InvoiceDetail/></ProtectedRoute>} />
+          <Route path="/payments" element={<ProtectedRoute><Payments/></ProtectedRoute>} />
         </Routes>
+        <Toast />
       </BrowserRouter>
     </AuthProvider>
   );

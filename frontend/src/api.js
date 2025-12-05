@@ -10,6 +10,17 @@ api.interceptors.request.use(cfg => {
   const token = localStorage.getItem('jwt_token');
   if (token) cfg.headers.Authorization = `Bearer ${token}`;
   return cfg;
+}, err => Promise.reject(err));
+
+// central response handling: emit logout event on 401, emit toast events for errors
+api.interceptors.response.use(res => res, err => {
+  const status = err?.response?.status;
+  const message = err?.response?.data?.message || err.message || 'Network Error';
+  if (status === 401) {
+    window.dispatchEvent(new CustomEvent('app-logout'));
+  }
+  window.dispatchEvent(new CustomEvent('app-toast', { detail: { message, type: 'error' } }));
+  return Promise.reject(err);
 });
 
 export async function register(payload) {
