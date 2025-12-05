@@ -13,7 +13,7 @@ export default function Login() {
       localStorage.setItem('jwt_token', res.token);
       setMsg('Login successful');
     } catch (err) {
-      setMsg('Login failed: ' + (err.response?.data || err.message));
+      setMsg('Login failed: ' + (err.response?.data?.message || err.message));
     }
   }
 
@@ -34,29 +34,4 @@ export default function Login() {
       <div>{msg}</div>
     </div>
   );
-}
-import React, {useState} from 'react';
-import axios from 'axios';
-
-export default function Login(){
-  const [username,setUsername]=useState('');
-  const [password,setPassword]=useState('');
-  const submit = async (e) => {
-    e.preventDefault();
-    try{
-      const res = await axios.post('/api/auth/login', { username, password });
-      alert('Login successful. Token: ' + res.data.token);
-      localStorage.setItem('token', res.data.token);
-    }catch(err){
-      alert('Login failed');
-    }
-  }
-  return (
-    <form onSubmit={submit}>
-      <h2>Login</h2>
-      <div><input placeholder="username" value={username} onChange={e=>setUsername(e.target.value)}/></div>
-      <div><input placeholder="password" type="password" value={password} onChange={e=>setPassword(e.target.value)}/></div>
-      <button type="submit">Login</button>
-    </form>
-  )
 }
