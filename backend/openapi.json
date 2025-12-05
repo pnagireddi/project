@@ -1,31 +1,25 @@
 ﻿
 
-StatusCode        : 200
-StatusDescription : 
-Content           : {"openapi":"3.0.1","info":{"title":"ABC Telecom 
-                    - Postpaid Billing System 
-                    API","description":"API documentation for ABC 
-                    Telecom Postpaid Billing 
-                    System","contact":{"name":"ABC Telecom Dev 
-                    Team","email...
-RawContent        : HTTP/1.1 200 
-                    X-Content-Type-Options: nosniff
-                    X-XSS-Protection: 0
-                    Pragma: no-cache
-                    X-Frame-Options: DENY
-                    Content-Length: 9343
-                    Cache-Control: no-cache, no-store, max-age=0, 
-                    must-revalidate
-                    Conte...
-Forms             : 
-Headers           : {[X-Content-Type-Options, nosniff], 
-                    [X-XSS-Protection, 0], [Pragma, no-cache], 
-                    [X-Frame-Options, DENY]...}
-Images            : {}
-InputFields       : {}
-Links             : {}
-ParsedHtml        : 
-RawContentLength  : 9343
+openapi    : 3.0.1
+info       : @{title=ABC Telecom - Postpaid Billing System API; 
+             description=API documentation for ABC Telecom Postpaid 
+             Billing System; contact=; license=; version=v1}
+servers    : {@{url=http://localhost:8080; description=Generated 
+             server url}}
+tags       : {@{name=Authentication; description=Endpoints for user 
+             registration and login}, @{name=Payments; 
+             description=Make and list payments for invoices}, 
+             @{name=Admin Users; description=Admin operations for 
+             user management}, @{name=Invoices; description=Create 
+             and view invoices}...}
+paths      : @{/api/users/{id}=; /api/services/{id}=; 
+             /api/services/{id}/usage=; 
+             /api/invoices/{id}/payments=; /api/customers=; 
+             /api/customers/{id}/services=; 
+             /api/customers/{id}/invoices=; /api/auth/register=; 
+             /api/auth/login=; /api/invoices/{id}=; 
+             /api/customers/{id}=; /api/auth/me=}
+components : @{schemas=}
 
 
 

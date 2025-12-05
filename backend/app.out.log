@@ -1,0 +1,47 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.1.4)
+
+2025-12-06T00:59:17.248+05:30  INFO 5764 --- [           main] com.abc.telecom.AbcTelecomApplication    : Starting AbcTelecomApplication v0.0.1-SNAPSHOT using Java 17.0.7 with PID 5764 (C:\WorkSpace\GEN-AI(Level-3)\backend\target\abc-telecom-backend-0.0.1-SNAPSHOT.jar started by Nagi in C:\WorkSpace\GEN-AI(Level-3))
+2025-12-06T00:59:17.251+05:30  INFO 5764 --- [           main] com.abc.telecom.AbcTelecomApplication    : No active profile set, falling back to 1 default profile: "default"
+2025-12-06T00:59:18.251+05:30  INFO 5764 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-12-06T00:59:18.340+05:30  INFO 5764 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 78 ms. Found 6 JPA repository interfaces.
+2025-12-06T00:59:19.278+05:30  INFO 5764 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2025-12-06T00:59:19.293+05:30  INFO 5764 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-12-06T00:59:19.293+05:30  INFO 5764 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.13]
+2025-12-06T00:59:19.419+05:30  INFO 5764 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-12-06T00:59:19.421+05:30  INFO 5764 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2090 ms
+2025-12-06T00:59:19.678+05:30  INFO 5764 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-12-06T00:59:19.782+05:30  INFO 5764 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.2.9.Final
+2025-12-06T00:59:19.785+05:30  INFO 5764 --- [           main] org.hibernate.cfg.Environment            : HHH000406: Using bytecode reflection optimizer
+2025-12-06T00:59:19.992+05:30  INFO 5764 --- [           main] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2025-12-06T00:59:20.193+05:30  INFO 5764 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-12-06T00:59:20.215+05:30  INFO 5764 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-12-06T00:59:21.000+05:30  INFO 5764 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@191a709b
+2025-12-06T00:59:21.005+05:30  INFO 5764 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-12-06T00:59:21.128+05:30  WARN 5764 --- [           main] org.hibernate.orm.deprecation            : HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-12-06T00:59:21.779+05:30  INFO 5764 --- [           main] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2025-12-06T00:59:22.876+05:30  INFO 5764 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2025-12-06T00:59:22.978+05:30  INFO 5764 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-12-06T00:59:24.041+05:30  WARN 5764 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-12-06T00:59:24.624+05:30  INFO 5764 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@750ed637, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@5190010f, org.springframework.security.web.context.SecurityContextHolderFilter@4e3f2908, org.springframework.security.web.header.HeaderWriterFilter@3730f716, org.springframework.web.filter.CorsFilter@673e76b3, org.springframework.security.web.authentication.logout.LogoutFilter@27fe059d, com.abc.telecom.security.JwtAuthFilter@7235f92b, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@e3b0369, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@72443081, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@1bedc703, org.springframework.security.web.access.ExceptionTranslationFilter@64bebd55, org.springframework.security.web.access.intercept.AuthorizationFilter@2921a36a]
+2025-12-06T00:59:25.073+05:30  INFO 5764 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2025-12-06T00:59:25.113+05:30  INFO 5764 --- [           main] com.abc.telecom.AbcTelecomApplication    : Started AbcTelecomApplication in 8.346 seconds (process running for 8.95)
+Hibernate: select u1_0.user_id from users u1_0 where u1_0.username=? limit ?
+Hibernate: select u1_0.user_id from users u1_0 where u1_0.username=? limit ?
+2025-12-06T00:59:28.468+05:30  INFO 5764 --- [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-12-06T00:59:28.469+05:30  INFO 5764 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-12-06T00:59:28.470+05:30  INFO 5764 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2025-12-06T00:59:29.047+05:30  INFO 5764 --- [nio-8080-exec-1] o.springdoc.api.AbstractOpenApiResource  : Init duration for springdoc-openapi is: 516 ms
+Hibernate: select u1_0.user_id,u1_0.created_at,u1_0.email,u1_0.password_hash,u1_0.role,u1_0.updated_at,u1_0.username from users u1_0 where u1_0.username=?
+Hibernate: select u1_0.user_id,u1_0.created_at,u1_0.email,u1_0.password_hash,u1_0.role,u1_0.updated_at,u1_0.username from users u1_0 where u1_0.username=?
+Hibernate: select u1_0.user_id,u1_0.created_at,u1_0.email,u1_0.password_hash,u1_0.role,u1_0.updated_at,u1_0.username from users u1_0 where u1_0.username=?
+Hibernate: select c1_0.customer_id,c1_0.address,c1_0.created_at,c1_0.full_name,c1_0.phone_number,c1_0.updated_at,c1_0.user_id from customers c1_0 where c1_0.user_id=?
+Hibernate: select u1_0.user_id,u1_0.created_at,u1_0.email,u1_0.password_hash,u1_0.role,u1_0.updated_at,u1_0.username from users u1_0 where u1_0.username=?
+Hibernate: select u1_0.user_id,u1_0.created_at,u1_0.email,u1_0.password_hash,u1_0.role,u1_0.updated_at,u1_0.username from users u1_0 where u1_0.username=?
+Hibernate: select c1_0.customer_id,c1_0.address,c1_0.created_at,c1_0.full_name,c1_0.phone_number,c1_0.updated_at,c1_0.user_id from customers c1_0 where c1_0.customer_id=?
