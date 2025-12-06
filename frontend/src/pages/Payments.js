@@ -1,44 +1,60 @@
-import React, { useState } from 'react';
-import { makePayment } from '../api';
+import React, { useEffect, useState, useContext } from 'react';
+import { getAllPayments, getCustomerInvoices, getInvoicePayments } from '../api';
+import { AuthContext } from '../AuthContext';
 
 export default function Payments(){
-  const [invoiceId, setInvoiceId] = useState('');
-  const [amount, setAmount] = useState('');
-  const [method, setMethod] = useState('CARD');
-  const [result, setResult] = useState(null);
+  const [payments, setPayments] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const auth = useContext(AuthContext);
 
-  async function onPay(e){
-    e.preventDefault();
+  useEffect(()=>{ load(); },[]);
+
+  async function load(){
+    setLoading(true);
     try{
-      const payload = { amount: Number(amount), method };
-      const r = await makePayment(Number(invoiceId), payload);
-      setResult(JSON.stringify(r, null, 2));
-    }catch(err){ setResult('Error: ' + (err?.response?.data?.message || err.message)); }
+      // If admin, list all payments; otherwise list payments for the logged-in customer's invoices
+      if (auth?.user && auth.user.role && auth.user.role.toUpperCase() === 'ADMIN'){
+        const data = await getAllPayments();
+        setPayments(data || []);
+      } else if (auth?.customer && auth.customer.customerId){
+        const invs = await getCustomerInvoices(auth.customer.customerId);
+        const arr = [];
+        for (const inv of (invs || [])){
+          try{
+            const p = await getInvoicePayments(inv.invoiceId);
+            (p || []).forEach(x => arr.push(x));
+          }catch(e){ /* ignore per-invoice failures */ }
+        }
+        setPayments(arr);
+      } else {
+        // Fallback: try admin endpoint
+        const data = await getAllPayments();
+        setPayments(data || []);
+      }
+    }catch(err){ setPayments([]); }
+    setLoading(false);
   }
 
   return (
     <div>
-      <h2>Make Payment</h2>
-      <form onSubmit={onPay}>
+      <h2>Payments</h2>
+      {loading ? <div>Loading...</div> : (
         <div>
-          <label>Invoice ID:</label>
-          <input value={invoiceId} onChange={e=>setInvoiceId(e.target.value)} />
+          {payments.map(p => (
+            <div key={p.paymentId} style={{padding:8, borderRadius:6, background:'linear-gradient(90deg,#111,#1a1a1a)', marginBottom:6}}>
+              <div>
+                <strong>Invoice:</strong> #{p.invoiceId}
+                {' — '}
+                <strong>Amount:</strong> ${p.amount}
+                {' — '}
+                <strong>Method:</strong> {p.paymentMethod || p.method || 'N/A'}
+                {' — '}
+                <small>{p.createdAt ? new Date(p.createdAt).toLocaleString() : ''}</small>
+              </div>
+            </div>
+          ))}
         </div>
-        <div>
-          <label>Amount:</label>
-          <input value={amount} onChange={e=>setAmount(e.target.value)} />
-        </div>
-        <div>
-          <label>Method:</label>
-          <select value={method} onChange={e=>setMethod(e.target.value)}>
-            <option value="CARD">Card</option>
-            <option value="BANK">Bank</option>
-            <option value="CASH">Cash</option>
-          </select>
-        </div>
-        <button type="submit">Pay</button>
-      </form>
-      <pre>{result}</pre>
+      )}
     </div>
   );
 }

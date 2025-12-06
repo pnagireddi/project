@@ -15,4 +15,5 @@ public class PaymentService {
     public Payment create(Payment p) { return repo.save(p); }
 
     public List<Payment> findByInvoiceId(Long invoiceId) { return repo.findByInvoiceId(invoiceId); }
+    public List<Payment> findAll() { return repo.findAll(); }
 }

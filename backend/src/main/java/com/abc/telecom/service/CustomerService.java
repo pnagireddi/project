@@ -25,4 +25,6 @@ public class CustomerService {
         if (list == null || list.isEmpty()) return java.util.Optional.empty();
         return java.util.Optional.of(list.get(0));
     }
+
+    public java.util.List<Customer> findAll() { return customerRepository.findAll(); }
 }

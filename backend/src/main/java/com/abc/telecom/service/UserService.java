@@ -36,7 +36,35 @@ public class UserService {
 
     public Optional<User> findById(Long id) { return userRepository.findById(id); }
 
-    public User update(User u) { return userRepository.save(u); }
+    public User update(User u) {
+        if (u == null) throw new IllegalArgumentException("User must not be null");
+        if (u.getUserId() == null) {
+            // no id: treat as save
+            if (u.getPasswordHash() != null && !u.getPasswordHash().isEmpty()) {
+                u.setPasswordHash(passwordEncoder.encode(u.getPasswordHash()));
+            }
+            return userRepository.save(u);
+        }
+        Optional<User> opt = userRepository.findById(u.getUserId());
+        if (opt.isPresent()) {
+            User existing = opt.get();
+            if (u.getUsername() != null) existing.setUsername(u.getUsername());
+            if (u.getEmail() != null) existing.setEmail(u.getEmail());
+            if (u.getRole() != null) existing.setRole(u.getRole());
+            // preserve passwordHash if not provided; if provided assume raw password and encode
+            if (u.getPasswordHash() != null && !u.getPasswordHash().isEmpty()) {
+                existing.setPasswordHash(passwordEncoder.encode(u.getPasswordHash()));
+            }
+            return userRepository.save(existing);
+        }
+        // fallback to save incoming
+        if (u.getPasswordHash() != null && !u.getPasswordHash().isEmpty()) {
+            u.setPasswordHash(passwordEncoder.encode(u.getPasswordHash()));
+        }
+        return userRepository.save(u);
+    }
 
     public void delete(Long id) { userRepository.deleteById(id); }
+
+    public java.util.List<User> findAll() { return userRepository.findAll(); }
 }

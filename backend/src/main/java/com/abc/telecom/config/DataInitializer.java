@@ -10,15 +10,12 @@ import com.abc.telecom.repository.CustomerRepository;
 import com.abc.telecom.repository.TelecomServiceRepository;
 import com.abc.telecom.repository.UsageRecordRepository;
 import com.abc.telecom.repository.InvoiceRepository;
-import com.abc.telecom.repository.PaymentRepository;
+import com.abc.telecom.repository.ServiceTemplateRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
+// cleaned up unused imports
 
 @Component
 public class DataInitializer implements CommandLineRunner {
@@ -28,6 +25,7 @@ public class DataInitializer implements CommandLineRunner {
     private final TelecomServiceRepository telecomServiceRepository;
     private final UsageRecordRepository usageRecordRepository;
     private final InvoiceRepository invoiceRepository;
+    private final ServiceTemplateRepository serviceTemplateRepository;
     private final PasswordEncoder passwordEncoder;
 
     public DataInitializer(UserRepository userRepository,
@@ -35,12 +33,14 @@ public class DataInitializer implements CommandLineRunner {
                            TelecomServiceRepository telecomServiceRepository,
                            UsageRecordRepository usageRecordRepository,
                            InvoiceRepository invoiceRepository,
+                           ServiceTemplateRepository serviceTemplateRepository,
                            PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.customerRepository = customerRepository;
         this.telecomServiceRepository = telecomServiceRepository;
         this.usageRecordRepository = usageRecordRepository;
         this.invoiceRepository = invoiceRepository;
+        this.serviceTemplateRepository = serviceTemplateRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -72,12 +72,13 @@ public class DataInitializer implements CommandLineRunner {
             c.setPhoneNumber("+1-555-0100");
             c = customerRepository.save(c);
 
-            // Add a sample service
+            // Add a sample service (use new serviceName/monthlyFee fields)
             TelecomService svc = new TelecomService();
             svc.setCustomerId(c.getCustomerId());
-            svc.setServiceType("Unlimited Mobile Plan");
+            svc.setServiceName("Unlimited Mobile Plan");
+            svc.setMonthlyFee(29.99);
             svc.setStartDate(java.time.LocalDateTime.now().minusMonths(1));
-            svc.setStatus("ACTIVE");
+            svc.setStatus("active");
             svc = telecomServiceRepository.save(svc);
 
             // Add a sample usage
@@ -98,5 +99,20 @@ public class DataInitializer implements CommandLineRunner {
             inv.setStatus("UNPAID");
             inv = invoiceRepository.save(inv);
         }
+
+        // Seed some service templates if none exist
+        try{
+            if (serviceTemplateRepository.count() == 0) {
+                var t1 = new com.abc.telecom.model.ServiceTemplate();
+                t1.setServiceName("UNLIMITED");
+                t1.setMonthlyFee(350.0);
+                serviceTemplateRepository.save(t1);
+
+                var t2 = new com.abc.telecom.model.ServiceTemplate();
+                t2.setServiceName("DATA_2GB");
+                t2.setMonthlyFee(20.0);
+                serviceTemplateRepository.save(t2);
+            }
+        }catch(Exception ex){ /* ignore seeding failures */ }
     }
 }

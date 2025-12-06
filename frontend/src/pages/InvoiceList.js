@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { getCustomerInvoices } from '../api';
 import { Link } from 'react-router-dom';
+import InlinePay from '../components/InlinePay';
 
 export default function InvoiceList(){
   const [customerId, setCustomerId] = useState('');
@@ -22,13 +23,27 @@ export default function InvoiceList(){
         <input value={customerId} onChange={e=>setCustomerId(e.target.value)} />
         <button onClick={load}>Load</button>
       </div>
-      <ul>
+      <div style={{marginTop:12}}>
         {invoices.map(inv => (
-          <li key={inv.invoiceId}>
-            <Link to={`/invoices/${inv.invoiceId}`}>Invoice #{inv.invoiceId}</Link> - {inv.status} - ${inv.totalAmount}
-          </li>
+          <div key={inv.invoiceId} className="data-table" style={{padding:10,marginBottom:8,display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+            <div>
+              <Link to={`/invoices/${inv.invoiceId}`} style={{fontWeight:700}}>Invoice #{inv.invoiceId}</Link>
+              <div style={{fontSize:12,opacity:0.85}}>Period: {inv.billingPeriodStart} → {inv.billingPeriodEnd}</div>
+            </div>
+            <div style={{display:'flex',gap:12,alignItems:'center'}}>
+              <div className={inv.status === 'paid' ? 'badge badge-paid' : 'badge badge-unpaid'}>{inv.status}</div>
+              <div style={{fontWeight:800}}>${inv.totalAmount}</div>
+              <Link to={`/invoices/${inv.invoiceId}`} className="btn-ghost">View</Link>
+              {inv.status !== 'paid' && (
+                <InlinePay invoice={inv} onPaid={() => {
+                  // refresh list after payment
+                  load();
+                }} />
+              )}
+            </div>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }

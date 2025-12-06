@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { createCustomer } from '../api';
+import JSONTable from '../components/JSONTable';
 import { AuthContext } from '../AuthContext';
 
 export default function CustomerProfile(){
@@ -39,9 +40,9 @@ export default function CustomerProfile(){
     try{
       const payload = { userId: Number(userId), fullName, address, phoneNumber };
       const res = await createCustomer(payload);
-      setResult(JSON.stringify(res, null, 2));
+      setResult(res);
     }catch(err){
-      setResult('Error: ' + (err?.response?.data?.message || err.message));
+      setResult({ error: (err?.response?.data?.message || err.message) });
     }
   }
 
@@ -71,7 +72,18 @@ export default function CustomerProfile(){
         </div>
         <button type="submit">Save Profile</button>
       </form>
-      <pre>{result}</pre>
+      {result && (
+        <div style={{marginTop:12}}>
+          {result.error ? (
+            <div style={{color:'#e74c3c', fontWeight:600}}>{result.error}</div>
+          ) : (
+            <>
+              <h3>Saved Profile</h3>
+              <JSONTable data={result} />
+            </>
+          )}
+        </div>
+      )}
     </div>
   );
 }

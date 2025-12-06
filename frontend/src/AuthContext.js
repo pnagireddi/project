@@ -4,8 +4,13 @@ import { getMe, login as apiLogin } from './api';
 export const AuthContext = createContext({ user: null, customer: null, token: null, login: async () => {}, logout: () => {} });
 
 export function AuthProvider({ children }){
-  const [token, setToken] = useState(localStorage.getItem('jwt_token'));
+  const [token, setToken] = useState(null);
   const [me, setMe] = useState(null);
+
+  useEffect(()=>{
+    // ensure we start on login/register screen by clearing any persisted token
+    try { localStorage.removeItem('jwt_token'); } catch(e) {}
+  }, []);
 
   useEffect(()=>{
     if (!token) { setMe(null); return; }

@@ -14,7 +14,9 @@ public class TelecomService {
 
     private Long customerId; // FK
 
-    private String serviceType;
+    private String serviceName;
+
+    private Double monthlyFee;
 
     private LocalDateTime startDate;
 
@@ -30,8 +32,10 @@ public class TelecomService {
     public void setServiceId(Long serviceId) { this.serviceId = serviceId; }
     public Long getCustomerId() { return customerId; }
     public void setCustomerId(Long customerId) { this.customerId = customerId; }
-    public String getServiceType() { return serviceType; }
-    public void setServiceType(String serviceType) { this.serviceType = serviceType; }
+    public String getServiceName() { return serviceName; }
+    public void setServiceName(String serviceName) { this.serviceName = serviceName; }
+    public Double getMonthlyFee() { return monthlyFee; }
+    public void setMonthlyFee(Double monthlyFee) { this.monthlyFee = monthlyFee; }
     public LocalDateTime getStartDate() { return startDate; }
     public void setStartDate(LocalDateTime startDate) { this.startDate = startDate; }
     public String getStatus() { return status; }

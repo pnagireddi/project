@@ -1,53 +1,51 @@
-import React, { useState } from 'react';
-import { getCustomer, getCustomerServices, generateInvoice } from '../api';
+import React, { useState, useContext } from 'react';
+import { getCustomerServices, getMe } from '../api';
+import { AuthContext } from '../AuthContext';
+import JSONTable from '../components/JSONTable';
 
 export default function Dashboard(){
-  const [customerId, setCustomerId] = useState('');
-  const [output, setOutput] = useState('');
+  const { customer } = useContext(AuthContext);
+  const [output, setOutput] = useState(null);
 
   async function loadProfile(){
-    if(!customerId) return setOutput('Enter customer ID');
+    if(!customerId) return setOutput({ error: 'Enter customer ID' });
     try{
       const c = await getCustomer(Number(customerId));
-      setOutput(JSON.stringify(c, null, 2));
-    }catch(err){ setOutput('Error: ' + (err?.response?.data?.message || err.message)); }
+      setOutput(c);
+    }catch(err){ setOutput({ error: (err?.response?.data?.message || err.message) }); }
+  }
+
+  async function loadMyDetails(){
+    try{
+      const me = await getMe();
+      // if customer profile present, show it; otherwise show user
+      if (me.customer) setOutput(me.customer); else setOutput(me.user || me);
+    }catch(err){ setOutput({ error: (err?.response?.data?.message || err.message) }); }
   }
 
   async function loadServices(){
-    if(!customerId) return setOutput('Enter customer ID');
+    const cid = customer?.customerId;
+    if(!cid) return setOutput({ error: 'No customer profile available. Please login as customer.' });
     try{
-      const s = await getCustomerServices(Number(customerId));
-      setOutput(JSON.stringify(s, null, 2));
-    }catch(err){ setOutput('Error: ' + (err?.response?.data?.message || err.message)); }
+      const s = await getCustomerServices(Number(cid));
+      setOutput(s || []);
+    }catch(err){ setOutput({ error: (err?.response?.data?.message || err.message) }); }
   }
 
-  async function onGenerate(){
-    if(!customerId) return setOutput('Enter customer ID');
-    const start = new Date();
-    start.setMonth(start.getMonth()-1);
-    const end = new Date();
-    const startStr = start.toISOString().slice(0,10);
-    const endStr = end.toISOString().slice(0,10);
-    try{
-      const inv = await generateInvoice(Number(customerId), startStr, endStr);
-      setOutput(JSON.stringify(inv, null, 2));
-    }catch(err){ setOutput('Error: ' + (err?.response?.data?.message || err.message)); }
-  }
+  // invoice generation is an admin responsibility — removed from dashboard
 
   return (
     <div>
       <h2>Dashboard</h2>
       <p>Quick actions for demo users.</p>
-      <div>
-        <label>Customer ID:</label>
-        <input value={customerId} onChange={e=>setCustomerId(e.target.value)} />
-      </div>
       <div style={{marginTop:8}}>
-        <button onClick={loadProfile}>Load Profile</button>
-        <button onClick={loadServices} style={{marginLeft:8}}>List Services</button>
-        <button onClick={onGenerate} style={{marginLeft:8}}>Generate Invoice (last month)</button>
+        <button onClick={loadServices}>List My Services</button>
+        <button onClick={loadMyDetails} style={{marginLeft:8}}>My Details</button>
       </div>
-      <pre style={{marginTop:12, whiteSpace:'pre-wrap'}}>{output}</pre>
+      <div style={{marginTop:12}}>
+        {output?.error && <div style={{color:'#e74c3c', fontWeight:600}}>{output.error}</div>}
+        {output && !output.error && <JSONTable data={output} />}
+      </div>
     </div>
   )
 }

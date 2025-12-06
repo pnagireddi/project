@@ -47,6 +47,15 @@ export async function getCustomerServices(customerId) {
   return api.get(`/customers/${customerId}/services`).then(r => r.data);
 }
 
+export async function getMyServices() {
+  return api.get(`/customers/me/services`).then(r => r.data);
+}
+
+export async function getTemplates() { return api.get('/services/templates').then(r => r.data); }
+export async function createTemplate(payload) { return api.post('/services/templates', payload).then(r => r.data); }
+export async function assignTemplate(templateId, customerId, monthlyFee) { return api.post(`/services/templates/${templateId}/assign?customerId=${customerId}` + (monthlyFee ? `&monthlyFee=${monthlyFee}` : '')).then(r => r.data); }
+export async function subscribeToTemplate(templateId, monthlyFee) { return api.post('/customers/me/services/subscribe', { templateId, monthlyFee }).then(r => r.data); }
+
 export async function getCustomerInvoices(customerId) {
   return api.get(`/customers/${customerId}/invoices`).then(r => r.data);
 }
@@ -54,6 +63,8 @@ export async function getCustomerInvoices(customerId) {
 export async function getInvoice(invoiceId) {
   return api.get(`/invoices/${invoiceId}`).then(r => r.data);
 }
+
+export async function getInvoiceLines(invoiceId) { return api.get(`/invoices/${invoiceId}/lines`).then(r => r.data); }
 
 export async function getInvoicePayments(invoiceId) {
   return api.get(`/invoices/${invoiceId}/payments`).then(r => r.data);
@@ -63,12 +74,22 @@ export async function getMe() {
   return api.get('/auth/me').then(r => r.data);
 }
 
+export async function getAllUsers() { return api.get('/users').then(r => r.data); }
+export async function getAllCustomers() { return api.get('/customers').then(r => r.data); }
+export async function updateUser(userId, payload) { return api.put(`/users/${userId}`, payload).then(r => r.data); }
+export async function deleteUser(userId) { return api.delete(`/users/${userId}`).then(r => r.data); }
+export async function getServiceUsage(serviceId) { return api.get(`/services/${serviceId}/usage`).then(r => r.data); }
+export async function sendInvoice(invoiceId) { return api.post(`/invoices/${invoiceId}/send`).then(r => r.data); }
+export async function getAllPayments() { return api.get('/payments').then(r => r.data); }
+
 export async function addUsage(serviceId, payload) {
   return api.post(`/services/${serviceId}/usage`, payload).then(r => r.data);
 }
 
-export async function generateInvoice(customerId, start, end) {
-  return api.post(`/customers/${customerId}/invoices?start=${encodeURIComponent(start)}&end=${encodeURIComponent(end)}`).then(r => r.data);
+export async function generateInvoice(customerId, start, end, lines) {
+  const url = `/customers/${customerId}/invoices?start=${encodeURIComponent(start)}&end=${encodeURIComponent(end)}`;
+  if (lines) return api.post(url, lines).then(r => r.data);
+  return api.post(url).then(r => r.data);
 }
 
 export async function makePayment(invoiceId, payload) {

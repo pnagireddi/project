@@ -40,4 +40,11 @@ public class UserAdminController {
         userService.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("")
+    @Operation(summary = "List all users (admin only)")
+    public ResponseEntity<?> listUsers() {
+        return ResponseEntity.ok(userService.findAll());
+    }
 }
