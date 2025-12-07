@@ -18,6 +18,9 @@ import java.util.List;
 @RequestMapping("/api/customers")
 @Tag(name = "Customers", description = "Customer profiles and services")
 public class CustomerController {
+    
+
+
     private final CustomerService customerService;
     private final TelecomServiceService serviceService;
     private final AuthService authService;
